@@ -1,27 +1,34 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Primes primes1 = new Primes();
-        Primes primes2 = new Primes();
-        Primes primes3 = new Primes();
-        //Los tres hilos compiten por sacar los numeros primos
-        primes1.start();
-        primes2.start();
-        primes3.start();
-        try {
-            primes1.join();  //Hasta que no acabe este hilo, lo demás no lo van a hacer. Por tanto, el Thread-0 siempre va a terminar el primnero.
-            primes2.join();
-            primes3.join();
-        } catch (InterruptedException e) {
-            System.err.println(e.getLocalizedMessage());
+        int hilos = 0;
+        boolean check;
+        Primes prime;
+        Scanner sc = new Scanner(System.in);
+
+        do {
+            System.out.print("¿Cuantos hilos quieres? (no más de 8)");
+            check = false;
+            while (!check) {
+                try {
+                    hilos = sc.nextInt();
+                    check = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("Por favor, introduce un dato numérico: ");
+                    sc.next();
+                }
+            }
+        } while (hilos > 8);
+
+        for (int i = 0; i < hilos; i++) {
+            prime = new Primes();
+            prime.start();
+
+            if (!prime.isAlive())
+                System.out.println("El " + prime.getName() + "ha terminado");
         }
-
-        if (!primes1.isAlive())
-            System.out.println("He terminado " + primes1.getName());
-        if (!primes2.isAlive())
-            System.out.println("He terminado " + primes2.getName());
-        if (!primes3.isAlive())
-            System.out.println("He terminado " + primes3.getName());
-
 
     }
 }
