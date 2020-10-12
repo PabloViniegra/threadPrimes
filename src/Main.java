@@ -2,10 +2,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         int hilos = 0;
         boolean check;
-        Primes prime = null;
+        Primes prime;
         Scanner sc = new Scanner(System.in);
 
         do {
